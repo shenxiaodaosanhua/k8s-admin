@@ -34,12 +34,14 @@
 
 <script>
 import { getList } from '@/api/deployments'
+import { NewClient } from "@/utils/ws"
 
 export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: true,
+      wsClient: null
     }
   },
   created() {
@@ -48,10 +50,17 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList("myweb").then(response => {
+      getList('myweb').then(response => {
         this.list = response.data
         this.listLoading = false
       })
+      this.wsClient = NewClient()
+      this.wsClient.onmessage = (e) => {
+        if (e.data !== 'ping') {
+          this.list = JSON.parse(e.data)
+          this.$forceUpdate()
+        }
+      }
     }
   }
 }
