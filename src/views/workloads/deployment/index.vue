@@ -13,6 +13,12 @@
           {{ scope.$index+1 }}
         </template>
       </el-table-column>
+      <el-table-column label="状态">
+        <template slot-scope="scope">
+          <p v-html="getStatus(scope.row)"></p>
+          <p v-show="!scope.row.IsComplete" class="el-message--error">{{ getMessage(scope.row) }}</p>
+        </template>
+      </el-table-column>
       <el-table-column label="名称">
         <template slot-scope="scope">
           {{ scope.row.Name }}
@@ -28,13 +34,25 @@
           {{ scope.row.Images }}
         </template>
       </el-table-column>
+      <el-table-column label="可用副本数">
+        <template slot-scope="scope">
+          <span class="el-message--info">{{ scope.row.Replicas[0] }}</span>/
+          <span class="el-message--success">{{ scope.row.Replicas[1] }}</span>/
+          <span class="el-message--error">{{ scope.row.Replicas[2] }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="创建时间">
+        <template slot-scope="scope">
+          {{ scope.row.CreatedAt }}
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
 import { getList } from '@/api/deployments'
-import { NewClient } from "@/utils/ws"
+import { NewClient } from '@/utils/ws'
 
 export default {
   data() {
@@ -61,6 +79,19 @@ export default {
           this.$forceUpdate()
         }
       }
+    },
+    getStatus(row) {
+      if (row.IsComplete) {
+        return '<span class="el-message--success">Active</span>'
+      }
+      return '<span class="el-message--error">Waiting</span>'
+    },
+    getMessage(row) {
+      if (!row.IsComplete) {
+        return row.Message
+      }
+
+      return ''
     }
   }
 }
