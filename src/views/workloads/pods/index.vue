@@ -1,13 +1,29 @@
 <template>
   <div>
-    <el-container v-for="ns in nslist" :key="ns.$index">
-      <el-header>{{ ns.namespace }}</el-header>
+    <el-container>
+      <el-header>
+        <el-row>
+          <el-col :span="2">请选择命名空间：</el-col>
+          <el-col :span="10">
+            <el-select v-model="defaultValue" @change="loadPods" placeholder="请选择命名空间">
+              <el-option
+                v-for="item in namespaceData"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
+              >
+              </el-option>
+            </el-select>
+          </el-col>
+        </el-row>
+      </el-header>
+    </el-container>
+    <el-container>
       <el-main>
         <el-table
-          :data="pods[ns.namespace]"
+          :data="pods"
           border
           fit
-          :row-key="ns.namespace"
           highlight-current-row
         >
           <el-table-column align="center" label="序号">
@@ -16,7 +32,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="名称">
+          <el-table-column label="名称" align="center">
             <template slot-scope="scope">
               <p>{{ scope.row.name }}</p>
             </template>
@@ -44,23 +60,20 @@ import { getPodsByNs } from '@/api/pod'
 export default {
   data() {
     return {
-      nslist: null,
-      pods: {}
+      namespaceData: null,
+      pods: null,
+      defaultValue: ''
     }
   },
   created() {
     getList().then(response => {
-      this.nslist = response.data // namespace 列表
-      this.nslist.forEach(ns => { // 循环获取pods
-        this.loadPods(ns.namespace)
-      })
+      this.namespaceData = response.data // namespace 列表
     })
-    console.log(this.nslist, this.pods)
   },
   methods: {
     loadPods(ns) {
       getPodsByNs(ns).then(rsp => {
-        this.pods[ns] = rsp.data
+        this.pods = rsp.data
       })
     }
   }
