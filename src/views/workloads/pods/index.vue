@@ -60,7 +60,7 @@
           layout="prev, pager, next"
           :total="getPodsTotal(pods)"
           :page-size="5"
-          :current-page="1"
+          :current-page="pages"
           :hide-on-single-page="true"
           @current-change="(current)=>changePage(defaultValue, current)"
         >
@@ -80,7 +80,8 @@ export default {
     return {
       namespaceData: null,
       pods: null,
-      defaultValue: ''
+      defaultValue: '',
+      pages: 1
     }
   },
   computed: {
@@ -111,6 +112,7 @@ export default {
         const result = JSON.parse(e.data)
         if (result.type === 'pods' && result.result.namespace === this.defaultValue) {
           this.pods = result.result.data
+          this.pages = 1
           this.$forceUpdate()
         }
       }
@@ -133,6 +135,7 @@ export default {
       return '<span class="el-badge__content--danger">Waiting</span>'
     },
     changePage(ns, current) {
+      this.pages = current
       this.loadPods(ns, current)
     },
     getCount(param) {
