@@ -21,10 +21,12 @@
     <el-container>
       <el-main>
         <el-table
-          :data="pods"
+          :data="getPodsList(pods)"
           border
           fit
           highlight-current-row
+          :summary-method="getCount"
+          show-summary
         >
           <el-table-column align="center" label="序号">
             <template slot-scope="scope">
@@ -53,6 +55,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="getPodsTotal(pods)"
+          :page-size="5"
+          :current-page="1"
+          :hide-on-single-page="true"
+          @current-change="(current)=>changePage(defaultValue, current)"
+        >
+        </el-pagination>
       </el-main>
     </el-container>
   </div>
@@ -71,6 +83,24 @@ export default {
       defaultValue: ''
     }
   },
+  computed: {
+    getPodsTotal(pods) {
+      return (pods) => {
+        if (typeof (pods) === undefined || pods == null) {
+          return 0
+        }
+        return pods.total
+      }
+    },
+    getPodsList(pods) {
+      return (pods) => {
+        if (typeof (pods) === undefined || pods == null) {
+          return null
+        }
+        return pods.data
+      }
+    }
+  },
   created() {
     getList().then(response => {
       this.namespaceData = response.data // namespace 列表
@@ -87,9 +117,12 @@ export default {
     }
   },
   methods: {
-    loadPods(ns) {
+    loadPods(ns, current) {
       this.defaultValue = ns
-      getPodsByNs(ns).then(rsp => {
+      if (typeof (current) === undefined || current == null) {
+        current = 1
+      }
+      getPodsByNs(ns, current).then(rsp => {
         this.pods = rsp.data
       })
     },
@@ -98,6 +131,24 @@ export default {
         return '<span class="el-badge__content--success">Active</span>'
       }
       return '<span class="el-badge__content--danger">Waiting</span>'
+    },
+    changePage(ns, current) {
+      this.loadPods(ns, current)
+    },
+    getCount(param) {
+      const { data } = param
+      const sum = []
+      sum[0] = 'pods合计'
+      if (data !== null && data.length > 0) {
+        if (typeof (this.pods) === undefined || this.pods == null) {
+          sum[1] = 0
+        } else {
+          sum[1] = this.pods.total
+        }
+      } else {
+        sum[1] = 0
+      }
+      return sum
     }
   }
 }
