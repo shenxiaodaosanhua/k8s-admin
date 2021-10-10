@@ -31,7 +31,11 @@
               {{ scope.$index+1 }}
             </template>
           </el-table-column>
-
+          <el-table-column label="状态" align="center">
+            <template slot-scope="scope">
+              <p v-html="getStatus(scope.row.is_ready)"></p>
+            </template>
+          </el-table-column>
           <el-table-column label="名称" align="center">
             <template slot-scope="scope">
               <p>{{ scope.row.name }}</p>
@@ -40,6 +44,7 @@
           <el-table-column label="镜像" align="center">
             <template slot-scope="scope">
               <p>{{ scope.row.images }}</p>
+              <p>{{ scope.row.message }}</p>
             </template>
           </el-table-column>
           <el-table-column label="创建时间" align="center">
@@ -56,6 +61,7 @@
 <script>
 import { getList } from '@/api/ns'
 import { getPodsByNs } from '@/api/pod'
+import { NewClient } from '@/utils/ws'
 
 export default {
   data() {
@@ -69,12 +75,29 @@ export default {
     getList().then(response => {
       this.namespaceData = response.data // namespace 列表
     })
+    this.wsClient = NewClient()
+    this.wsClient.onmessage = (e) => {
+      if (e.data !== 'ping') {
+        const result = JSON.parse(e.data)
+        if (result.type === 'pods' && result.result.namespace === this.defaultValue) {
+          this.pods = result.result.data
+          this.$forceUpdate()
+        }
+      }
+    }
   },
   methods: {
     loadPods(ns) {
+      this.defaultValue = ns
       getPodsByNs(ns).then(rsp => {
         this.pods = rsp.data
       })
+    },
+    getStatus(IsReady) {
+      if (IsReady) {
+        return '<span class="el-badge__content--success">Active</span>'
+      }
+      return '<span class="el-badge__content--danger">Waiting</span>'
     }
   }
 }

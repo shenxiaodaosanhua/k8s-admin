@@ -75,8 +75,11 @@ export default {
       this.wsClient = NewClient()
       this.wsClient.onmessage = (e) => {
         if (e.data !== 'ping') {
-          this.list = JSON.parse(e.data)
-          this.$forceUpdate()
+          const result = JSON.parse(e.data)
+          if (result.type === 'deployments') {
+            this.list = result.result.data
+            this.$forceUpdate()
+          }
         }
       }
     },
