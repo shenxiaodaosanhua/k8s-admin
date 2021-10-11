@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/ns'
+import { getNamespaceList } from '@/api/ns'
 import { getPodsByNs } from '@/api/pod'
 import { NewClient } from '@/utils/ws'
 
@@ -103,7 +103,7 @@ export default {
     }
   },
   created() {
-    getList().then(response => {
+    getNamespaceList().then(response => {
       this.namespaceData = response.data // namespace 列表
     })
     this.wsClient = NewClient()
@@ -163,6 +163,5 @@ export default {
   color: #fff;
   text-align: center;
   line-height: 60px;
-
 }
 </style>
