@@ -34,34 +34,34 @@
         <el-table-column label="状态">
           <template slot-scope="scope">
             <p v-html="getStatus(scope.row)"></p>
-            <p v-show="!scope.row.IsComplete" class="el-message--error">{{ getMessage(scope.row) }}</p>
+            <p v-show="!scope.row.is_complete" class="el-message--error">{{ getMessage(scope.row) }}</p>
           </template>
         </el-table-column>
         <el-table-column label="名称">
           <template slot-scope="scope">
-            {{ scope.row.Name }}
+            {{ scope.row.name }}
           </template>
         </el-table-column>
         <el-table-column label="命名空间">
           <template slot-scope="scope">
-            {{ scope.row.Namespace }}
+            {{ scope.row.namespace }}
           </template>
         </el-table-column>
         <el-table-column label="镜像">
           <template slot-scope="scope">
-            {{ scope.row.Images }}
+            {{ scope.row.images }}
           </template>
         </el-table-column>
         <el-table-column label="可用副本数">
           <template slot-scope="scope">
-            <span class="el-message--info">{{ scope.row.Replicas[0] }}</span>/
-            <span class="el-message--success">{{ scope.row.Replicas[1] }}</span>/
-            <span class="el-message--error">{{ scope.row.Replicas[2] }}</span>
+            <span class="el-message--info">{{ scope.row.replicas[0] }}</span>/
+            <span class="el-message--success">{{ scope.row.replicas[1] }}</span>/
+            <span class="el-message--error">{{ scope.row.replicas[2] }}</span>
           </template>
         </el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
-            {{ scope.row.CreatedAt }}
+            {{ scope.row.created_at }}
           </template>
         </el-table-column>
       </el-table>
@@ -108,13 +108,13 @@ export default {
       })
     },
     getStatus(row) {
-      if (row.IsComplete) {
+      if (row.is_complete) {
         return '<span class="el-message--success">Active</span>'
       }
       return '<span class="el-message--error">Waiting</span>'
     },
     getMessage(row) {
-      if (!row.IsComplete) {
+      if (!row.is_complete) {
         return row.Message
       }
 
