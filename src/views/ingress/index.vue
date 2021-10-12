@@ -85,5 +85,10 @@ export default {
 </script>
 
 <style scoped>
-
+.el-header, .el-footer {
+  background-color: #7cd1c0;
+  color: #fff;
+  text-align: center;
+  line-height: 60px;
+}
 </style>
