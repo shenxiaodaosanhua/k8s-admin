@@ -15,11 +15,23 @@
               :key="item.name"
               :label="item.name"
               :value="item.name"
-            >
-            </el-option>
+            />
           </el-select>
         </el-form-item>
       </el-form>
+    </el-card>
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>标签</span>
+      </div>
+      <el-container>
+        <el-input
+          v-model="ingress.annotations"
+          type="textarea"
+          :rows="4"
+          placeholder="请输入内容"
+        />
+      </el-container>
     </el-card>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
@@ -35,7 +47,7 @@
         <template v-for="(path, pathKey) in rule.paths">
           <el-form :inline="true">
             <el-form-item label="Path">
-              <el-input v-model="path.path" placeholder="Path"/>
+              <el-input v-model="path.path" placeholder="Path" />
             </el-form-item>
             <el-form-item label="服务名">
               <el-select v-model="path.service_name" placeholder="选择服务">
@@ -44,12 +56,11 @@
                   :key="item.name"
                   :label="item.name"
                   :value="item.name"
-                >
-                </el-option>
+                />
               </el-select>
             </el-form-item>
             <el-form-item label="端口">
-              <el-input v-model="path.port" placeholder="填写服务端口"/>
+              <el-input v-model="path.port" placeholder="填写服务端口" />
             </el-form-item>
             <el-form-item>
               <el-button v-show="pathKey>0" type="primary" @click="rmPathCfg(ruleKey, pathKey)">-</el-button>
@@ -68,7 +79,6 @@
 import { createIngress } from '@/api/ingress'
 import { getNamespaceList } from '@/api/ns'
 import { getSvcListByNs } from '@/api/svc'
-import router from "@/router";
 
 export default {
   data() {
@@ -78,6 +88,7 @@ export default {
       ingress: {
         name: '',
         namespace: '',
+        annotations: '',
         rules: [
           {
             host: '',
