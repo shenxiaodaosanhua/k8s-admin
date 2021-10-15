@@ -33,6 +33,11 @@
             <p>{{ scope.row.name }}</p>
           </template>
         </el-table-column>
+        <el-table-column label="域名" align="center">
+          <template slot-scope="scope">
+            <p>{{ scope.row.host }}</p>
+          </template>
+        </el-table-column>
         <el-table-column label="创建时间" align="center">
           <template slot-scope="scope">
             {{ scope.row.created_at }}

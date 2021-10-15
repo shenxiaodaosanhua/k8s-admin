@@ -68,6 +68,7 @@
 import { createIngress } from '@/api/ingress'
 import { getNamespaceList } from '@/api/ns'
 import { getSvcListByNs } from '@/api/svc'
+import router from "@/router";
 
 export default {
   data() {
@@ -124,8 +125,18 @@ export default {
     },
     postNew() {
       createIngress(this.ingress)
-        .then((rsp) => {
-          console.log(rsp.data)
+        .then((res) => {
+          if (res.data === 'ok') {
+            this.$message({
+              message: '增加成功',
+              type: 'success',
+              onClose: e => {
+                this.$router.replace({
+                  path: '/ingress/index'
+                })
+              }
+            })
+          }
         })
     },
     onNsChange(ns) {
