@@ -10,8 +10,7 @@
               :key="item.name"
               :label="item.name"
               :value="item.name"
-            >
-            </el-option>
+            />
           </el-select>
         </el-col>
       </el-row>
@@ -43,6 +42,16 @@
             {{ scope.row.created_at }}
           </template>
         </el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              circle
+              @click="deleteIngress(scope.row)"
+            />
+          </template>
+        </el-table-column>
       </el-table>
     </el-main>
   </el-container>
@@ -51,7 +60,7 @@
 <script>
 
 import { getNamespaceList } from '@/api/ns'
-import { getIngressList } from '@/api/ingress'
+import { getIngressList, deleteIngress } from '@/api/ingress'
 import { NewClient } from '@/utils/ws'
 
 export default {
@@ -83,6 +92,20 @@ export default {
       this.defaultValue = ns
       getIngressList(ns).then(res => {
         this.ingress = res.data
+      })
+    },
+    deleteIngress(ingress) {
+      this.$confirm('是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteIngress({
+          name: ingress.name,
+          namespace: ingress.namespace
+        }).then(res => {
+          console.log(res)
+        })
       })
     }
   }

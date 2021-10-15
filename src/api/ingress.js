@@ -16,3 +16,11 @@ export function createIngress(data) {
     data: data
   })
 }
+
+export function deleteIngress(data) {
+  return request({
+    url: '/v1/ingress',
+    method: 'delete',
+    data: data
+  })
+}
