@@ -39,10 +39,13 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column label="设置" align="center">
+        <el-table-column label="配置" align="center">
           <template slot-scope="scope">
             <p>
-              <i :class="scope.row.ingress_options.is_cors ? 'el-icon-success' : 'el-icon-error'">CORS</i>
+              <i :class="scope.row.ingress_options.is_cors ? 'el-icon-success' : 'el-icon-error'">跨域</i>
+            </p>
+            <p>
+              <i :class="scope.row.ingress_options.is_rewrite ? 'el-icon-success' : 'el-icon-error'">重写</i>
             </p>
           </template>
         </el-table-column>

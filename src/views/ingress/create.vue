@@ -33,6 +33,7 @@
         />
       </el-container>
       <Cors ref="cors" />
+      <Rewrite ref="rewrite" />
     </el-card>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
@@ -81,8 +82,13 @@ import { createIngress } from '@/api/ingress'
 import { getNamespaceList } from '@/api/ns'
 import { getSvcListByNs } from '@/api/svc'
 import Cors from './cors'
+import Rewrite from './rewrite'
 
 export default {
+  components: {
+    Cors,
+    Rewrite
+  },
   data() {
     return {
       namespaceData: [],
@@ -137,7 +143,11 @@ export default {
       })
     },
     postNew() {
-      this.ingress.annotations = this.ingress.annotations + this.$refs.cors.output()
+      let annotations = this.ingress.annotations
+      for (const ref in this.$refs) {
+        annotations += this.$refs[ref].output()
+      }
+      this.ingress.annotations = annotations
       createIngress(this.ingress)
         .then((res) => {
           if (res.data === 'ok') {
@@ -158,9 +168,6 @@ export default {
         this.svcs = res.data
       })
     }
-  },
-  components: {
-    Cors
   }
 
 }
