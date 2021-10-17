@@ -32,6 +32,7 @@
           placeholder="请输入内容"
         />
       </el-container>
+      <Cors ref="cors" />
     </el-card>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
@@ -79,6 +80,7 @@
 import { createIngress } from '@/api/ingress'
 import { getNamespaceList } from '@/api/ns'
 import { getSvcListByNs } from '@/api/svc'
+import Cors from './cors'
 
 export default {
   data() {
@@ -135,6 +137,7 @@ export default {
       })
     },
     postNew() {
+      this.ingress.annotations = this.ingress.annotations + this.$refs.cors.output()
       createIngress(this.ingress)
         .then((res) => {
           if (res.data === 'ok') {
@@ -155,6 +158,9 @@ export default {
         this.svcs = res.data
       })
     }
+  },
+  components: {
+    Cors
   }
 
 }

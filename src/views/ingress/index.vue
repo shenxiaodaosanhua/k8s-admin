@@ -34,7 +34,16 @@
         </el-table-column>
         <el-table-column label="域名" align="center">
           <template slot-scope="scope">
-            <p>{{ scope.row.host }}</p>
+            <p>
+              <a target="_blank" :href="'http://' + scope.row.host">{{ scope.row.host }}</a>
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column label="设置" align="center">
+          <template slot-scope="scope">
+            <p>
+              <i :class="scope.row.ingress_options.is_cors ? 'el-icon-success' : 'el-icon-error'">CORS</i>
+            </p>
           </template>
         </el-table-column>
         <el-table-column label="创建时间" align="center">
@@ -62,6 +71,7 @@
 import { getNamespaceList } from '@/api/ns'
 import { getIngressList, deleteIngress } from '@/api/ingress'
 import { NewClient } from '@/utils/ws'
+
 
 export default {
   data() {
