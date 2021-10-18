@@ -103,23 +103,23 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/example',
+    path: '/secrets',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    redirect: '/secrets/index',
+    name: 'Secrets',
+    meta: { title: '密文管理', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/secrets/index'),
+        meta: { title: '密文列表', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'create',
+        name: 'Create',
+        component: () => import('@/views/secrets/create'),
+        meta: { title: '密文创建', icon: 'tree' }
       }
     ]
   },
