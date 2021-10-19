@@ -66,19 +66,31 @@
 
 import { getNamespaceList } from '@/api/ns'
 import { getSecretListByNs, deleteSecret } from '@/api/secret'
+import { NewClient } from '@/utils/ws'
 
 export default {
   data() {
     return {
       secrets: null,
       namespaceData: null,
-      defaultValue: ''
+      defaultValue: '',
+      wsClient: null
     }
   },
   created() {
     getNamespaceList().then(response => {
       this.namespaceData = response.data // namespace 列表
     })
+    this.wsClient = NewClient()
+    this.wsClient.onmessage = (e) => {
+      if (e.data !== 'ping') {
+        const result = JSON.parse(e.data)
+        if (result.type === 'secrets' && result.result.namespace === this.defaultValue) {
+          this.secrets = result.result.data
+          this.$forceUpdate()
+        }
+      }
+    }
   },
   methods: {
     loadIngress(ns) {
