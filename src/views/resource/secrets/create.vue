@@ -6,7 +6,7 @@
           <span>基本配置</span>
           <el-form :inline="true">
             <el-form-item label="密文名称">
-              <el-input v-model="secret.name"></el-input>
+              <el-input v-model="secret.name" />
             </el-form-item>
             <el-form-item label="命名空间">
               <el-select v-model="secret.namespace" placeholder="请选择命名空间">
@@ -18,10 +18,20 @@
                 />
               </el-select>
             </el-form-item>
+            <el-form-item label="密文类型">
+              <el-select v-model="currentValue" placeholder="请选择命名空间" @change="currentType">
+                <el-option
+                  v-for="item in secretTypes"
+                  :key="item.key"
+                  :label="item.key"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
           </el-form>
         </div>
       </el-card>
-      <Opaque v-bind:name="secret.name" v-bind:namespace="secret.namespace"></Opaque>
+      <Component :is="currentValue" v-bind:name="secret.name" v-bind:namespace="secret.namespace"></Component>
     </el-main>
   </el-container>
 </template>
@@ -31,11 +41,16 @@ import { getNamespaceList } from '@/api/ns'
 
 export default {
   components: {
-    Opaque: () => import('./create-opaque')
+    Opaque: () => import('./create-opaque'),
+    Tls: () => import('./create-tls')
   },
   data() {
     return {
       namespaceData: null,
+      secretTypes: [
+        { key: '通用', value: 'Opaque' },
+        { key: 'tls证书', value: 'Tls' }
+      ],
       currentValue: '',
       secret: {
         name: '',
