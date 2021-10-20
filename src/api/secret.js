@@ -14,3 +14,11 @@ export function deleteSecret(data) {
     data: data
   })
 }
+
+export function createSecret(data) {
+  return request({
+    url: '/v1/secrets',
+    method: 'post',
+    data: data
+  })
+}
