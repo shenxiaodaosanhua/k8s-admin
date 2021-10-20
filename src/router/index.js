@@ -116,6 +116,13 @@ export const constantRoutes = [
         meta: { title: '密文列表', icon: 'table' }
       },
       {
+        path: 'secret/create',
+        name: 'Secret',
+        hidden: true,
+        component: () => import('@/views/resource/secrets/create'),
+        meta: { title: '新增密文', icon: 'table' }
+      },
+      {
         path: 'configmap/index',
         name: 'ConfigMap',
         component: () => import('@/views/resource/configmap/index'),
