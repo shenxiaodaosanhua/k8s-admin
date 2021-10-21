@@ -7,6 +7,14 @@ export function getConfigMapByNs(ns) {
   })
 }
 
+export function createConfigMap(data) {
+  return request({
+    url: '/v1/config-map',
+    method: 'post',
+    data: data
+  })
+}
+
 export function deleteConfigMap(data) {
   return request({
     url: '/v1/config-map',

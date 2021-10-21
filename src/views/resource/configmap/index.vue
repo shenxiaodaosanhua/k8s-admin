@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="2">请选择命名空间：</el-col>
-        <el-col :span="10">
+        <el-col :span="5">
           <el-select v-model="defaultValue" placeholder="请选择命名空间" @change="loadConfigMap">
             <el-option
               v-for="item in namespaceData"
@@ -12,6 +12,9 @@
               :value="item.name"
             />
           </el-select>
+        </el-col>
+        <el-col :span="5">
+          <el-button type="text" @click="addSecret">新增配置</el-button>
         </el-col>
       </el-row>
     </el-header>
@@ -106,6 +109,11 @@ export default {
         }).then(res => {
           this.$message.error(res.data)
         })
+      })
+    },
+    addSecret() {
+      this.$router.replace({
+        path: '/resource/configmap/create'
       })
     }
   }

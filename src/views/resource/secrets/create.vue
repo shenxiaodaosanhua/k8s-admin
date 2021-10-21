@@ -19,7 +19,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="密文类型">
-              <el-select v-model="currentValue" placeholder="请选择命名空间" @change="currentType">
+              <el-select v-model="currentValue" placeholder="请选择命名空间">
                 <el-option
                   v-for="item in secretTypes"
                   :key="item.key"
@@ -31,7 +31,7 @@
           </el-form>
         </div>
       </el-card>
-      <Component :is="currentValue" v-bind:name="secret.name" v-bind:namespace="secret.namespace"></Component>
+      <Component :is="currentValue" :name="secret.name" :namespace="secret.namespace" />
     </el-main>
   </el-container>
 </template>
@@ -70,9 +70,6 @@ export default {
     })
   },
   methods: {
-    currentType() {
-      console.log(111)
-    }
   }
 }
 </script>
