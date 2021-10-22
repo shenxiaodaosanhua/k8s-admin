@@ -22,3 +22,10 @@ export function createSecret(data) {
     data: data
   })
 }
+
+export function getSecretInfo(ns, name) {
+  return request({
+    url: '/v1/secrets/' + ns + '/' + name,
+    method: 'get'
+  })
+}

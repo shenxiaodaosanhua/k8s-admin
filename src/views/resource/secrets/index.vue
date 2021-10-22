@@ -32,7 +32,13 @@
         </el-table-column>
         <el-table-column label="名称" align="center">
           <template slot-scope="scope">
-            <p>{{ scope.row.name }}</p>
+            <p>
+              <router-link
+                :to="{name:'Secret-Info', params:{ns:scope.row.namespace, name:scope.row.name}}"
+              >
+                {{ scope.row.name }}
+              </router-link>
+            </p>
           </template>
         </el-table-column>
         <el-table-column label="命名空间" align="center">
@@ -76,13 +82,16 @@ export default {
     return {
       secrets: null,
       namespaceData: null,
-      defaultValue: '',
+      defaultValue: 'default',
       wsClient: null
     }
   },
   created() {
     getNamespaceList().then(response => {
       this.namespaceData = response.data // namespace 列表
+    })
+    getSecretListByNs('default').then(res => {
+      this.secrets = res.data
     })
     this.wsClient = NewClient()
     this.wsClient.onmessage = (e) => {

@@ -111,16 +111,23 @@ export const constantRoutes = [
     children: [
       {
         path: 'secret/index',
-        name: 'Secret',
+        name: 'Secret-Index',
         component: () => import('@/views/resource/secrets/index'),
         meta: { title: '密文列表', icon: 'table' }
       },
       {
         path: 'secret/create',
-        name: 'Secret',
+        name: 'Secret-Create',
         hidden: true,
         component: () => import('@/views/resource/secrets/create'),
         meta: { title: '新增密文', icon: 'table' }
+      },
+      {
+        path: 'secret/info',
+        name: 'Secret-Info',
+        hidden: true,
+        component: () => import('@/views/resource/secrets/info'),
+        meta: { title: '查看密文', icon: 'table' }
       },
       {
         path: 'configmap/index',
