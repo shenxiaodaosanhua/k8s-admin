@@ -7,6 +7,13 @@ export function getConfigMapByNs(ns) {
   })
 }
 
+export function getConfigMapByNsInfo(ns, name) {
+  return request({
+    url: '/v1/config-map/' + ns + '/' + name,
+    method: 'get'
+  })
+}
+
 export function createConfigMap(data) {
   return request({
     url: '/v1/config-map',

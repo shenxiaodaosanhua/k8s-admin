@@ -14,7 +14,7 @@
           </el-select>
         </el-col>
         <el-col :span="5">
-          <el-button type="text" @click="addSecret">新增配置</el-button>
+          <router-link :to="{name: 'ConfigMap-Create'}">新增配置</router-link>
         </el-col>
       </el-row>
     </el-header>
@@ -32,7 +32,15 @@
         </el-table-column>
         <el-table-column label="名称" align="center">
           <template slot-scope="scope">
-            <p>{{ scope.row.name }}</p>
+            <p><router-link
+              :to="{
+                name: 'ConfigMap-Info',
+                params: {
+                  name: scope.row.name,
+                  namespace: scope.row.namespace
+                }
+              }"
+            >{{ scope.row.name }}</router-link></p>
           </template>
         </el-table-column>
         <el-table-column label="命名空间" align="center">
@@ -71,13 +79,16 @@ export default {
     return {
       configMap: null,
       namespaceData: null,
-      defaultValue: '',
+      defaultValue: 'default',
       wsClient: null
     }
   },
   created() {
     getNamespaceList().then(response => {
       this.namespaceData = response.data // namespace 列表
+    })
+    getConfigMapByNs('default').then(res => {
+      this.configMap = res.data
     })
     this.wsClient = NewClient()
     this.wsClient.onmessage = (e) => {

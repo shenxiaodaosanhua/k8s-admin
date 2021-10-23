@@ -131,16 +131,23 @@ export const constantRoutes = [
       },
       {
         path: 'configmap/index',
-        name: 'ConfigMap',
+        name: 'ConfigMap-Index',
         component: () => import('@/views/resource/configmap/index'),
         meta: { title: '配置', icon: 'tree' }
       },
       {
         path: 'configmap/create',
-        name: 'ConfigMap',
+        name: 'ConfigMap-Create',
         hidden: true,
         component: () => import('@/views/resource/configmap/create'),
         meta: { title: '新增配置', icon: 'tree' }
+      },
+      {
+        path: 'configmap/info',
+        name: 'ConfigMap-Info',
+        hidden: true,
+        component: () => import('@/views/resource/configmap/info'),
+        meta: { title: '查看配置', icon: 'tree' }
       }
     ]
   },
