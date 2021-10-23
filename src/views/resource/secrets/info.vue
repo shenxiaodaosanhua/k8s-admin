@@ -19,6 +19,28 @@
     </el-descriptions>
     <div style="text-align: center">
       <el-table
+        v-show="ext_data.length>0"
+        :data="ext_data"
+        border
+        style="width: 100%"
+      >
+        <el-table-column
+          label="Key名"
+        >
+          <template slot-scope="scope">
+            <p>{{ scope.row.key }}</p>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="value值"
+        >
+          <template slot-scope="scope">
+            <p>{{ scope.row.value }}</p>
+          </template>
+        </el-table-column>
+
+      </el-table>
+      <el-table
         :data="secrets"
         border
       >
@@ -40,7 +62,6 @@
             >{{ scope.row.value }}</p>
           </template>
         </el-table-column>
-
       </el-table>
     </div>
   </el-main>
@@ -54,7 +75,8 @@ export default {
     return {
       ns: '',
       name: '',
-      secrets: []
+      secrets: [],
+      ext_data: []
     }
   },
   created() {
@@ -64,6 +86,11 @@ export default {
       for (const key in res.data.data) {
         this.secrets.push(
           { key, value: res.data.data[key] }
+        )
+      }
+      for (const key in res.data.ext_data) {
+        this.ext_data.push(
+          { key, value: res.data.ext_data[key] }
         )
       }
     })
