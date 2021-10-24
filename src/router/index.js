@@ -89,10 +89,24 @@ export const constantRoutes = [
         meta: { title: 'Deployment列表', icon: 'table' }
       },
       {
-        path: 'pods',
-        name: 'Pods',
+        path: 'pods/index',
+        name: 'pods-index',
         component: () => import('@/views/workloads/pods/index'),
         meta: { title: 'Pods列表', icon: 'tree' }
+      },
+      {
+        path: 'pods/info',
+        name: 'pods-info',
+        hidden: true,
+        component: () => import('@/views/workloads/pods/info'),
+        meta: { title: 'Pods详情', icon: 'tree' }
+      },
+      {
+        path: 'pods/container-logs',
+        name: 'pods-container-logs',
+        hidden: true,
+        component: () => import('@/views/workloads/pods/container-logs'),
+        meta: { title: '容器日志', icon: 'tree' }
       },
       {
         path: 'services',

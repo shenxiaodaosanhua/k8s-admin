@@ -5,14 +5,13 @@
         <el-row>
           <el-col :span="2">请选择命名空间：</el-col>
           <el-col :span="10">
-            <el-select v-model="defaultValue" @change="loadPods" placeholder="请选择命名空间">
+            <el-select v-model="defaultValue" placeholder="请选择命名空间" @change="loadPods">
               <el-option
                 v-for="item in namespaceData"
                 :key="item.name"
                 :label="item.name"
                 :value="item.name"
-              >
-              </el-option>
+              />
             </el-select>
           </el-col>
         </el-row>
@@ -35,12 +34,22 @@
           </el-table-column>
           <el-table-column label="状态" align="center">
             <template slot-scope="scope">
-              <p v-html="getStatus(scope.row.is_ready)"></p>
+              <p v-html="getStatus(scope.row.is_ready)" />
             </template>
           </el-table-column>
           <el-table-column label="名称" align="center">
             <template slot-scope="scope">
-              <p>{{ scope.row.name }}</p>
+              <p>
+                <router-link
+                  :to="{
+                    name: 'pods-info',
+                    params: {
+                      ns: scope.row.namespace,
+                      name: scope.row.name,
+                    }
+                  }"
+                >{{ scope.row.name }}</router-link>
+              </p>
             </template>
           </el-table-column>
           <el-table-column label="镜像" align="center">
@@ -63,8 +72,7 @@
           :current-page="pages"
           :hide-on-single-page="true"
           @current-change="(current)=>changePage(defaultValue, current)"
-        >
-        </el-pagination>
+        />
       </el-main>
     </el-container>
   </div>
@@ -80,7 +88,7 @@ export default {
     return {
       namespaceData: null,
       pods: null,
-      defaultValue: '',
+      defaultValue: 'default',
       pages: 1
     }
   },
@@ -105,6 +113,9 @@ export default {
   created() {
     getNamespaceList().then(response => {
       this.namespaceData = response.data // namespace 列表
+    })
+    getPodsByNs(this.defaultValue, 1).then(rsp => {
+      this.pods = rsp.data
     })
     this.wsClient = NewClient()
     this.wsClient.onmessage = (e) => {
