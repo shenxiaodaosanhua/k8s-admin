@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { getPodContainerLogs } from '@/api/pod'
+import request from '@/utils/request'
 
 export default {
   data() {
@@ -14,8 +14,12 @@ export default {
     }
   },
   created() {
-    getPodContainerLogs(this.$route.params.ns, this.$route.params.pname, this.$route.params.cname).then(res => {
-      this.logs += res.data
+    request({
+      url: '/v1/pod-logs?ns=' + this.$route.params.ns + '&pname=' + this.$route.params.pname + '&cname=' + this.$route.params.cname,
+      method: 'GET',
+      onDownloadProgress: e => {
+        this.logs += e.currentTarget.response
+      }
     })
   }
 }
