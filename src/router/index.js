@@ -83,10 +83,17 @@ export const constantRoutes = [
     meta: { title: '工作负载', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'deployments',
-        name: 'Deployments',
+        path: 'deployments/index',
+        name: 'deployments-index',
         component: () => import('@/views/workloads/deployment/index'),
         meta: { title: 'Deployment列表', icon: 'table' }
+      },
+      {
+        path: 'deployments/show',
+        name: 'deployments-show',
+        hidden: true,
+        component: () => import('@/views/workloads/deployment/show'),
+        meta: { title: 'Deployment详情', icon: 'table' }
       },
       {
         path: 'pods/index',

@@ -5,14 +5,13 @@
         <el-row>
           <el-col :span="2">请选择命名空间：</el-col>
           <el-col :span="10">
-            <el-select v-model="defaultValue" @change="getDeployment" placeholder="请选择命名空间">
+            <el-select v-model="defaultValue" placeholder="请选择命名空间" @change="getDeployment">
               <el-option
                 v-for="item in namespaceData"
                 :key="item.name"
                 :label="item.name"
                 :value="item.name"
-              >
-              </el-option>
+              />
             </el-select>
           </el-col>
         </el-row>
@@ -33,13 +32,21 @@
         </el-table-column>
         <el-table-column label="状态">
           <template slot-scope="scope">
-            <p v-html="getStatus(scope.row)"></p>
+            <p v-html="getStatus(scope.row)" />
             <p v-show="!scope.row.is_complete" class="el-message--error">{{ getMessage(scope.row) }}</p>
           </template>
         </el-table-column>
         <el-table-column label="名称">
           <template slot-scope="scope">
-            {{ scope.row.name }}
+            <router-link
+              :to="{
+                name: 'deployments-show',
+                params: {
+                  ns: scope.row.namespace,
+                  name: scope.row.name
+                }
+              }"
+            >{{ scope.row.name }}</router-link>
           </template>
         </el-table-column>
         <el-table-column label="命名空间">
@@ -70,7 +77,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/deployments'
+import { getDeploymentList } from '@/api/deployments'
 import { getNamespaceList } from '@/api/ns'
 import { NewClient } from '@/utils/ws'
 
@@ -81,12 +88,16 @@ export default {
       listLoading: true,
       wsClient: null,
       namespaceData: null,
-      defaultValue: ''
+      defaultValue: 'default'
     }
   },
   created() {
     getNamespaceList().then(response => {
       this.namespaceData = response.data // namespace 列表
+    })
+    getDeploymentList(this.defaultValue).then(res => {
+      this.list = res.data
+      this.listLoading = false
     })
     this.wsClient = NewClient()
     this.wsClient.onmessage = (e) => {
@@ -101,7 +112,7 @@ export default {
   },
   methods: {
     getDeployment(ns) {
-      getList(ns).then(res => {
+      getDeploymentList(ns).then(res => {
         this.list = res.data
         this.listLoading = false
         this.defaultValue = ns
