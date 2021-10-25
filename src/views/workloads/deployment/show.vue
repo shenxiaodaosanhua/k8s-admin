@@ -8,9 +8,11 @@
       <el-descriptions-item label="镜像">{{ deployment.images }}</el-descriptions-item>
       <el-descriptions-item label="状态">{{ deployment.is_complete }}</el-descriptions-item>
       <el-descriptions-item label="副本数">
-        {{ deployment.replicas[0] }}<i class="el-icon-success"></i>
-        {{ deployment.replicas[1] }}<i class="el-icon-info"></i>
-        {{ deployment.replicas[2] }}<i class="el-icon-error"></i>
+        <div v-if="deployment.replicas">
+          <el-tag type="info">副本数:{{ deployment.replicas[0] }}</el-tag>
+          <el-tag type="success">可用:{{ deployment.replicas[1] }}</el-tag>
+          <el-tag type="danger">不可用:{{ deployment.replicas[2] }}</el-tag>
+        </div>
       </el-descriptions-item>
     </el-descriptions>
   </el-main>
@@ -47,5 +49,8 @@ export default {
   color: #fff;
   text-align: center;
   line-height: 60px;
+}
+.el-tag{
+  margin: 0 10px;
 }
 </style>
