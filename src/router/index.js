@@ -109,6 +109,12 @@ export const constantRoutes = [
         meta: { title: 'Pods详情', icon: 'tree' }
       },
       {
+        path: 'podshell',
+        name: 'Podshell',
+        component: () => import('@/views/workloads/pods/podshell'),
+        meta: { title: 'podshell(临时)', icon: 'tree' }
+      },
+      {
         path: 'pods/container-logs',
         name: 'pods-container-logs',
         hidden: true,
