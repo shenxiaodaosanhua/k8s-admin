@@ -130,6 +130,27 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/nodes',
+    component: Layout,
+    redirect: '/nodes/node-shell',
+    name: 'nodes',
+    meta: { title: 'node-shell(临时)', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'node-shell',
+        name: 'node-shell',
+        component: () => import('@/views/nodes/node-shell'),
+        meta: { title: 'node-shell(临时)', icon: 'table' }
+      },
+      {
+        path: 'node/index',
+        name: 'node-index',
+        component: () => import('@/views/nodes/index'),
+        meta: { title: '节点列表', icon: 'tree' }
+      }
+    ]
+  },
+  {
     path: '/resource',
     component: Layout,
     redirect: '/resource/secrets',
