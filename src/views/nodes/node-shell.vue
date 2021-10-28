@@ -69,7 +69,7 @@ export default {
       // 创建terminal实例
       term.open(this.$refs['terminal'])
       term.prompt = () => {
-        term.writeln('\n\n Welcome to jtthink.com . ')
+        term.writeln('\n\n Welcome to shell . ')
         term.writeln('\n 正在初始化终端')
       }
       term.prompt()
