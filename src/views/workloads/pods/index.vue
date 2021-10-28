@@ -63,6 +63,19 @@
               {{ scope.row.created_at }}
             </template>
           </el-table-column>
+          <el-table-column label="操作" align="center">
+            <template slot-scope="scope">
+              <router-link
+                :to="{
+                  name:'pods-shell',
+                  params: {
+                    ns: scope.row.namespace,
+                    name: scope.row.name
+                  }
+                }"
+              >shell</router-link>
+            </template>
+          </el-table-column>
         </el-table>
         <el-pagination
           background

@@ -1,27 +1,31 @@
 <template>
-
   <div
     style="min-height: 500px;
     padding: 10px"
   >
     <div id="terminal" ref="terminal" />
   </div>
-
 </template>
+
 <script>
 import { Terminal } from 'xterm'
 import 'xterm/css/xterm.css'
 
 export default {
-
   data() {
     return {
       rows: 40,
       cols: 100,
       term: null, // 终端对象
       ws: null, // ws 客户端
-      wsInited: false // 是否初始化完毕
+      wsInited: false,
+      ns: '',
+      name: ''
     }
+  },
+  created() {
+    this.ns = this.$route.params.ns
+    this.name = this.$route.params.name
   },
   mounted() {
     this.initWS()// 初始化 websocket
@@ -43,7 +47,7 @@ export default {
     // 创建terminal实例
     term.open(this.$refs['terminal'])
     term.prompt = () => {
-      term.writeln('\n\n Welcome to jtthink.com . ')
+      term.writeln('\n\n Welcome to k8s shell . ')
       term.writeln('\n 正在初始化终端')
     }
     term.prompt()
@@ -59,7 +63,7 @@ export default {
   methods: {
     // 初始化 websocket 客户端
     initWS() {
-      var ws = new WebSocket('ws://localhost:8080/v1/pod-ws')
+      var ws = new WebSocket('ws://localhost:8080/v1/pod-ws?namespace=' + this.ns + '&name=' + this.name)
       ws.onopen = function() {
         console.log('open')
       }
@@ -78,5 +82,22 @@ export default {
   }
 
 }
-
 </script>
+
+<style scoped>
+.logs {
+  overflow: auto;
+
+  margin: 10px auto;
+  min-height: 200px;
+  max-height: 400px;
+  border: solid 1px black;
+  background-color: #454545;
+  padding: 10px;
+
+  color: #27aa5e;
+  line-height: 21pt;
+  white-space: pre;
+  width: 90%
+}
+</style>

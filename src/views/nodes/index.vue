@@ -21,6 +21,11 @@
           {{ scope.row.ip }}
         </template>
       </el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <router-link :to="{name:'node-shell', params:{name:scope.row.name}}">远程Shell</router-link>
+        </template>
+      </el-table-column>
     </el-table>
   </el-main>
 </template>

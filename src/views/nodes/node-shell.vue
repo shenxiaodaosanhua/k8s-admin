@@ -16,9 +16,12 @@ export default {
       cols: 100,
       term: null, // 终端对象
       ws: null, // ws 客户端
-      wsInited: false // 是否初始化完毕
-
+      wsInited: false, // 是否初始化完毕
+      name: ''
     }
+  },
+  created() {
+    this.name = this.$route.params.name
   },
   mounted() {
     this.initShell()
@@ -30,7 +33,7 @@ export default {
     },
     // 初始化 websocket 客户端
     initWS() {
-      var ws = new WebSocket('ws://localhost:8080/v1/node-ws')
+      var ws = new WebSocket('ws://localhost:8080/v1/node-ws?name=' + this.name)
       ws.onopen = function() {
         console.log('open')
       }

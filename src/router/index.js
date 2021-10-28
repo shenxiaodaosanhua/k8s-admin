@@ -109,10 +109,11 @@ export const constantRoutes = [
         meta: { title: 'Pods详情', icon: 'tree' }
       },
       {
-        path: 'podshell',
-        name: 'Podshell',
-        component: () => import('@/views/workloads/pods/podshell'),
-        meta: { title: 'podshell(临时)', icon: 'tree' }
+        path: 'pods/shell',
+        name: 'pods-shell',
+        hidden: true,
+        component: () => import('@/views/workloads/pods/pod-shell'),
+        meta: { title: 'Pods Shell', icon: 'tree' }
       },
       {
         path: 'pods/container-logs',
@@ -132,15 +133,15 @@ export const constantRoutes = [
   {
     path: '/nodes',
     component: Layout,
-    redirect: '/nodes/node-shell',
+    redirect: '/nodes/index',
     name: 'nodes',
-    meta: { title: 'node-shell(临时)', icon: 'el-icon-s-help' },
+    meta: { title: '节点列表', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'node-shell',
         name: 'node-shell',
         component: () => import('@/views/nodes/node-shell'),
-        meta: { title: 'node-shell(临时)', icon: 'table' }
+        meta: { title: 'node-shell', icon: 'table' }
       },
       {
         path: 'node/index',
