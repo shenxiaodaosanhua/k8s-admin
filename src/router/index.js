@@ -140,6 +140,7 @@ export const constantRoutes = [
       {
         path: 'node-shell',
         name: 'node-shell',
+        hidden: true,
         component: () => import('@/views/nodes/node-shell'),
         meta: { title: 'node-shell', icon: 'table' }
       },
