@@ -45,7 +45,12 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <router-link :to="{name:'node-shell', params:{name:scope.row.name}}">远程Shell</router-link>
+          <router-link :to="{name:'node-update', params:{name:scope.row.name}}">
+            <el-button type="text">编辑</el-button>
+          </router-link>
+          <router-link :to="{name:'node-shell', params:{name:scope.row.name}}">
+            <el-button type="text">远程Shell</el-button>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>

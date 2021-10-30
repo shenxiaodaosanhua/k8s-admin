@@ -149,6 +149,13 @@ export const constantRoutes = [
         name: 'node-index',
         component: () => import('@/views/nodes/index'),
         meta: { title: '节点列表', icon: 'tree' }
+      },
+      {
+        path: 'node/update',
+        name: 'node-update',
+        hidden: true,
+        component: () => import('@/views/nodes/update'),
+        meta: { title: '节点编辑', icon: 'tree' }
       }
     ]
   },
