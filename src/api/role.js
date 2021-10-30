@@ -6,3 +6,11 @@ export function getRolesByNs(ns) {
     method: 'get'
   })
 }
+
+export function createRoles(data) {
+  return request({
+    url: '/v1/roles',
+    method: 'post',
+    data: data
+  })
+}
