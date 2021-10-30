@@ -209,6 +209,28 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/rbac',
+    component: Layout,
+    redirect: '/rbac/role/index',
+    name: 'rbac',
+    meta: { title: '规则列表', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'role/index',
+        name: 'role-index',
+        component: () => import('@/views/rbac/role/index'),
+        meta: { title: '规则列表', icon: 'table' }
+      },
+      {
+        path: 'role/create',
+        name: 'role-create',
+        hidden: true,
+        component: () => import('@/views/rbac/role/create'),
+        meta: { title: '规则添加', icon: 'table' }
+      }
+    ]
+  },
+  {
     path: 'external-link',
     component: Layout,
     children: [
