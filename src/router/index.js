@@ -219,14 +219,20 @@ export const constantRoutes = [
         path: 'role/index',
         name: 'role-index',
         component: () => import('@/views/rbac/role/index'),
-        meta: { title: '规则列表', icon: 'table' }
+        meta: { title: 'Role规则列表', icon: 'table' }
       },
       {
         path: 'role/create',
         name: 'role-create',
         hidden: true,
         component: () => import('@/views/rbac/role/create'),
-        meta: { title: '规则添加', icon: 'table' }
+        meta: { title: 'Role规则添加', icon: 'table' }
+      },
+      {
+        path: 'role-binding/index',
+        name: 'role-binding-index',
+        component: () => import('@/views/rbac/role-binding/index'),
+        meta: { title: 'RoleBinding', icon: 'table' }
       }
     ]
   },

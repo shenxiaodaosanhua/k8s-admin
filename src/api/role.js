@@ -14,3 +14,10 @@ export function createRoles(data) {
     data: data
   })
 }
+
+export function getRoleBindingByNs(ns) {
+  return request({
+    url: '/v1/role-binding?ns=' + ns,
+    method: 'get',
+  })
+}
