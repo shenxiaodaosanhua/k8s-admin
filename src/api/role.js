@@ -18,6 +18,21 @@ export function createRoles(data) {
 export function getRoleBindingByNs(ns) {
   return request({
     url: '/v1/role-binding?ns=' + ns,
-    method: 'get',
+    method: 'get'
+  })
+}
+
+export function getRoleDetail(ns, name) {
+  return request({
+    url: '/v1/roles/' + ns + '/' + name,
+    method: 'get'
+  })
+}
+
+export function updateRole(ns, name, data) {
+  return request({
+    url: '/v1/roles/' + ns + '/' + name,
+    method: 'post',
+    data: data
   })
 }

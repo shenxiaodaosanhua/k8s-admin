@@ -34,10 +34,10 @@
           <template slot-scope="scope">
             <p><router-link
               :to="{
-                name: 'ConfigMap-Info',
+                name: 'role-detail',
                 params: {
                   name: scope.row.name,
-                  namespace: scope.row.namespace
+                  ns: scope.row.namespace
                 }
               }"
             >{{ scope.row.name }}</router-link></p>
