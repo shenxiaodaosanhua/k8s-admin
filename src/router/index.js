@@ -250,6 +250,28 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/namespaces',
+    component: Layout,
+    redirect: '/namespace/index',
+    name: 'namespaces',
+    meta: { title: '命名空间', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'namespace/index',
+        name: 'namespace-index',
+        component: () => import('@/views/namespace/index'),
+        meta: { title: '命名空间列表', icon: 'table' }
+      },
+      {
+        path: 'namespace/create',
+        name: 'namespace-create',
+        hidden: true,
+        component: () => import('@/views/namespace/create'),
+        meta: { title: '新增命名空间', icon: 'table' }
+      }
+    ]
+  },
+  {
     path: 'external-link',
     component: Layout,
     children: [

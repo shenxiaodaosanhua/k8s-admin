@@ -7,3 +7,18 @@ export function getNamespaceList() {
     method: 'get'
   })
 }
+
+export function createNamespace(data) {
+  return request({
+    url: '/v1/namespaces',
+    method: 'post',
+    data: data
+  })
+}
+
+export function deleteNamespaceByName(name) {
+  return request({
+    url: '/v1/namespaces?name=' + name,
+    method: 'delete'
+  })
+}
