@@ -239,7 +239,13 @@ export const constantRoutes = [
         path: 'role-binding/index',
         name: 'role-binding-index',
         component: () => import('@/views/rbac/role-binding/index'),
-        meta: { title: 'RoleBinding', icon: 'table' }
+        meta: { title: '角色绑定列表', icon: 'table' }
+      },
+      {
+        path: 'service-account/index',
+        name: 'service-account-index',
+        component: () => import('@/views/rbac/service-account/index'),
+        meta: { title: '服务账号列表', icon: 'table' }
       }
     ]
   },
